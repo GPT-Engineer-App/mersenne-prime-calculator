@@ -22,8 +22,8 @@ const Index = () => {
   const handleInputChange = (event) => setInput(event.target.value);
 
   const checkMersennePrime = () => {
-    const p = parseInt(input);
-    if (isNaN(p)) {
+    const maxExponent = parseInt(input);
+    if (isNaN(maxExponent)) {
       toast({
         title: "Error",
         description: "Please enter a valid number",
@@ -34,8 +34,13 @@ const Index = () => {
       return;
     }
 
-    const mersennePrime = isMersennePrime(p);
-    setResult(mersennePrime ? `2^${p} - 1 is a Mersenne prime` : `2^${p} - 1 is not a Mersenne prime`);
+    let mersennePrimes = [];
+    for (let p = 2; p <= maxExponent; p++) {
+      if (isMersennePrime(p)) {
+        mersennePrimes.push(`2^${p} - 1`);
+      }
+    }
+    setResult(mersennePrimes.length ? `Mersenne primes: ${mersennePrimes.join(", ")}` : `No Mersenne primes found up to 2^${maxExponent} - 1`);
   };
 
   return (
